@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:movie/controller/auth_controller.dart';
+import 'package:movie/screens/home/home_screen.dart';
 import 'package:movie/screens/login/passwordcontroller.dart';
 import 'package:movie/screens/signup/signup_screen.dart';
 import 'package:movie/widget/commantextfiledwidget.dart';
@@ -10,10 +12,14 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final AuthController authController = Get.put(AuthController());
+    final TextEditingController emailController = TextEditingController();
+    final TextEditingController passwordController = TextEditingController();
     final PasswordController controller = Get.put(PasswordController());
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Padding(
         padding: const EdgeInsets.all(15.0),
         child: Column(
@@ -42,6 +48,7 @@ class LoginScreen extends StatelessWidget {
               height: screenHeight * 0.03,
             ),
             CommonTextFieldWidget(
+              controller: emailController,
               customDecoration: InputDecoration(
                 hintText: "Email or Username",
                 //hintStyle: TextStyle(color:Color(0xff000000) ),
@@ -63,10 +70,11 @@ class LoginScreen extends StatelessWidget {
             ),
             Obx(
               () => CommonTextFieldWidget(
+                controller: passwordController,
                 isPassword: controller.obscureText.value,
                 prefixIcon: Icon(Icons.lock, color: Colors.purple),
                 customDecoration: InputDecoration(
-                    hintText: "Email",
+                    hintText: "password",
                     prefixIcon: Icon(Icons.lock, color: Colors.purple),
                     suffixIcon: IconButton(
                       icon: Icon(
@@ -100,16 +108,27 @@ class LoginScreen extends StatelessWidget {
             SizedBox(
               height: screenHeight * 0.03,
             ),
-            Container(
-              height: screenHeight * 0.07,
-              decoration: BoxDecoration(
-                  color: Color(0xffBB84E8),
-                  borderRadius: BorderRadius.circular(15)),
-              child: Center(
-                child: CommonTextWidget(
-                  text: "Sigin in",
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
+            InkWell(
+              onTap: () async {
+                var user = await authController.login(
+                  emailController.text,
+                  passwordController.text,
+                );
+                if (user != null) {
+                  Get.to(() => HomeScreen());
+                }
+              },
+              child: Container(
+                height: screenHeight * 0.07,
+                decoration: BoxDecoration(
+                    color: Color(0xffBB84E8),
+                    borderRadius: BorderRadius.circular(15)),
+                child: Center(
+                  child: CommonTextWidget(
+                    text: "Sigin in",
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             ),
@@ -129,13 +148,21 @@ class LoginScreen extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Container(
-                  height: screenHeight * 0.1,
-                  width: screenWidth * 0.1,
-                  decoration: BoxDecoration(
-                      image: DecorationImage(
-                    image: AssetImage("assets/images/googlelogo.png"),
-                  )),
+                InkWell(
+                  onTap: () async {
+                    var user = await authController.googleSignIn();
+                    if (user != null) {
+                      Get.to(() => HomeScreen());
+                    }
+                  },
+                  child: Container(
+                    height: screenHeight * 0.1,
+                    width: screenWidth * 0.1,
+                    decoration: BoxDecoration(
+                        image: DecorationImage(
+                      image: AssetImage("assets/images/googlelogo.png"),
+                    )),
+                  ),
                 )
               ],
             ),

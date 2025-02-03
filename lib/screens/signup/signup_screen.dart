@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:movie/controller/auth_controller.dart';
+import 'package:movie/screens/home/home_screen.dart';
 import 'package:movie/screens/login/login_screen.dart';
 import 'package:movie/screens/login/passwordcontroller.dart';
 import 'package:movie/widget/commantextfiledwidget.dart';
@@ -11,10 +13,15 @@ class SignupScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final AuthController _authController = Get.put(AuthController());
+    final TextEditingController emailController = TextEditingController();
+    final TextEditingController nameController = TextEditingController();
+    final TextEditingController passwordController = TextEditingController();
     final PasswordController controller = Get.put(PasswordController());
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
           leadingWidth: screenWidth * 1,
           leading: InkWell(
@@ -43,7 +50,7 @@ class SignupScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
-              height: screenHeight * 0.1,
+              height: 20,
             ),
             CommonTextWidget(
               text: "Sign up",
@@ -55,6 +62,7 @@ class SignupScreen extends StatelessWidget {
               height: screenHeight * 0.04,
             ),
             CommonTextFieldWidget(
+              controller: nameController,
               customDecoration: InputDecoration(
                 hintText: "Full Name",
                 //hintStyle: TextStyle(color:Color(0xff000000) ),
@@ -72,6 +80,7 @@ class SignupScreen extends StatelessWidget {
               height: screenHeight * 0.04,
             ),
             CommonTextFieldWidget(
+              controller: emailController,
               customDecoration: InputDecoration(
                 hintText: "Email",
                 //hintStyle: TextStyle(color:Color(0xff000000) ),
@@ -90,6 +99,7 @@ class SignupScreen extends StatelessWidget {
             ),
             Obx(
               () => CommonTextFieldWidget(
+                controller: passwordController,
                 isPassword: controller.obscureText.value,
                 prefixIcon: Icon(Icons.lock, color: Colors.purple),
                 customDecoration: InputDecoration(
@@ -116,16 +126,28 @@ class SignupScreen extends StatelessWidget {
             SizedBox(
               height: screenHeight * 0.03,
             ),
-            Container(
-              height: screenHeight * 0.07,
-              decoration: BoxDecoration(
-                  color: Color(0xffBB84E8),
-                  borderRadius: BorderRadius.circular(15)),
-              child: Center(
-                child: CommonTextWidget(
-                  text: "Sigin up",
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
+            InkWell(
+              onTap: () {
+                _authController
+                    .register(emailController.text, passwordController.text,
+                        nameController.text)
+                    .then((user) {
+                  if (user != null) {
+                    Get.to(HomeScreen());
+                  }
+                });
+              },
+              child: Container(
+                height: screenHeight * 0.07,
+                decoration: BoxDecoration(
+                    color: Color(0xffBB84E8),
+                    borderRadius: BorderRadius.circular(15)),
+                child: Center(
+                  child: CommonTextWidget(
+                    text: "Sigin up",
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             ),
