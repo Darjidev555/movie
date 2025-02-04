@@ -92,14 +92,16 @@ class _CustomdrawerState extends State<Customdrawer> {
                       });
                 },
                 child: Container(
-                  height: 25,
+                  height: 30,
                   width: 80,
-                  decoration: const BoxDecoration(
-                    color: Colors.red,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                    color: Color(0xffBB84E8),
                   ),
                   child: const Center(
                     child: CommonTextWidget(
                       text: "Logout",
+                      fontSize: 14,
                       color: Colors.white,
                     ),
                   ),
@@ -107,6 +109,22 @@ class _CustomdrawerState extends State<Customdrawer> {
               )
             ],
           ),
+        ),
+        ListTile(
+          title: Text("Settings"),
+          onTap: () {
+            // Handle settings navigation
+            print("Settings tapped");
+            Navigator.pop(context); // Close the drawer
+          },
+        ),
+        ListTile(
+          title: Text("Help"),
+          onTap: () {
+            // Handle help navigation
+            print("Help tapped");
+            Navigator.pop(context); // Close the drawer
+          },
         ),
       ],
     ));
