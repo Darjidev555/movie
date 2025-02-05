@@ -2,11 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
-import 'package:movie/controller/auth_controller.dart';
-import 'package:movie/screens/login/login_screen.dart';
-import 'package:movie/screens/signup/signup_screen.dart';
-import 'package:movie/widget/CustomBottomNavigation.dart';
-import 'package:movie/widget/movieList.dart';
+import 'package:movie/controller/homepage_controller.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -36,7 +32,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: CustomBottomNavigation(),
+      home: Homepagecontroller(),
     );
   }
 }

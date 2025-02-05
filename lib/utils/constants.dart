@@ -11,10 +11,8 @@ void showSnackBarWithTitleAndText(String title, String message) {
       duration: const Duration(seconds: 2));
 }
 
-
 ///url
-String baseUrl = "https://jsonplaceholder.typicode.com/posts";
-
+String baseUrl = "https://newsapi.org/";
 
 ///font family
 const String gothamBold = "GothamBold";

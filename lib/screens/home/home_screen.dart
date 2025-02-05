@@ -1,9 +1,12 @@
+import 'package:get/get.dart';
+import 'package:get/get_core/get_core.dart';
+import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
-import 'package:movie/utils/constants.dart';
-import 'package:movie/widget/commanListView.dart';
+import 'package:movie/controller/news_controller.dart';
 import 'package:movie/widget/commantextwidget.dart';
-import 'package:movie/widget/customdrawer.dart';
-import 'package:movie/widget/movieList.dart';
+import 'package:movie/widget/newsdetails.dart';
+import 'package:movie/widget/newstile.dart';
+import 'package:movie/widget/trandingcard.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -13,88 +16,109 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  String formatDate(DateTime? date) {
+    if (date == null) {
+      return "Unknown Date";
+    }
+    return DateFormat('yyyy-MM-dd').format(date);
+  }
+
   @override
   Widget build(BuildContext context) {
-    final List<String> items = ['Item 1', 'Item 2', 'Item 3', 'Item 4'];
-    double screenWidth = MediaQuery.of(context).size.width;
-    double screenHeight = MediaQuery.of(context).size.height;
+    NewsController newsController = Get.put(NewsController());
     return Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          title: CommonTextWidget(
-            text: "Movie",
-            fontFamily: gothamBold,
+      appBar: AppBar(
+        iconTheme: IconThemeData(color: Colors.white),
+        centerTitle: true,
+        backgroundColor: Colors.black54,
+        title: CommonTextWidget(
+          text: "News App",
+          color: Colors.white,
+          fontSize: 20,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+      /*drawer: Customdrawer(),*/
+      backgroundColor: Colors.black54,
+      body: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: const [
+                  CommonTextWidget(
+                    text: "Hottest News",
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                  CommonTextWidget(
+                    text: "See all",
+                    color: Colors.white,
+                  ),
+                ],
+              ),
+              const SizedBox(height: 20),
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Obx(() => newsController.isTrendingLoading.value
+                    ? CircularProgressIndicator()
+                    : Row(
+                        children: newsController.trendingNewsList
+                            .map((e) => Trandingcard(
+                                ontap: () {
+                                  Get.to(Newsdeatils(
+                                    newsModel: e,
+                                  ));
+                                },
+                                imageUrl: e.urlToImage!,
+                                tag: "Trending No 1",
+                                title: e.title!,
+                                author: e.author!,
+                                time: formatDate(e
+                                    .publishedAt))) // Dynamic date from e.publishedAt
+                            .toList(),
+                      )),
+              ),
+              const SizedBox(height: 15),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: const [
+                  CommonTextWidget(
+                    text: "News For You",
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                  CommonTextWidget(
+                    text: "See all",
+                    color: Colors.white,
+                  ),
+                ],
+              ),
+              const SizedBox(height: 10),
+              Obx(() => newsController.isNewsForYouLoading.value
+                  ? CircularProgressIndicator()
+                  : Column(
+                      children: newsController.newsForYouList
+                          .map((e) => Newstile(
+                              ontap: () {
+                                Get.to(Newsdeatils(newsModel: e));
+                              },
+                              title: e.title!,
+                              author: e.author ?? "Unknown",
+                              time: formatDate(e.publishedAt),
+                              // Dynamic date from e.publishedAt
+                              imageUrl: e.urlToImage ??
+                                  "https://www.hindustantimes.com/ht-img/img/2024/10/07/550x309/Prime-Minister-Narendra-Modi-and-Maldives-Presiden_1728317636195_1728317752751.jpg"))
+                          .toList(),
+                    ))
+            ],
           ),
         ),
-         drawer: Customdrawer(),
-        body: SingleChildScrollView(
-          physics: BouncingScrollPhysics(),
-          child: Container(
-            padding: const EdgeInsets.all(15.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    CommonTextWidget(
-                      text: "Now Showing",
-                      fontFamily: gothamBold,
-                      fontSize: 18,
-                    ),
-                    Container(
-                      height: screenHeight * 0.03,
-                      width: screenWidth * 0.2,
-                      decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Colors.black, // Border color
-                            width: 1.0,
-                          ),
-                          borderRadius: BorderRadius.circular(20)),
-                      child: Center(
-                          child: CommonTextWidget(
-                        text: "See more",
-                        fontSize: 10,
-                      )),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: screenHeight * 0.01,
-                ),
-                Commanlistview(),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    CommonTextWidget(
-                      text: "Popular",
-                      fontFamily: gothamBold,
-                      fontSize: 18,
-                    ),
-                    Container(
-                      height: screenHeight * 0.03,
-                      width: screenWidth * 0.2,
-                      decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Colors.black, // Border color
-                            width: 1.0,
-                          ),
-                          borderRadius: BorderRadius.circular(20)),
-                      child: Center(
-                          child: CommonTextWidget(
-                        text: "See more",
-                        fontSize: 10,
-                      )),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: screenHeight * 0.01,
-                ),
-                MovieList(),
-              ],
-            ),
-          ),
-        ));
+      ),
+    );
   }
 }

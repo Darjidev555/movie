@@ -12,7 +12,7 @@ class Customdrawer extends StatefulWidget {
 }
 
 class _CustomdrawerState extends State<Customdrawer> {
-  final AuthController authController = Get.find<AuthController>();
+  final AuthController authController = Get.put(AuthController());
 
   @override
   Widget build(BuildContext context) {

@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:movie/controller/homepage_controller.dart';
 import 'package:movie/screens/home/home_screen.dart';
 import 'package:movie/screens/login/login_screen.dart';
 
@@ -26,7 +27,7 @@ class AuthController extends GetxController {
     if (user != null) {
       userName.value = user.displayName ?? 'User';
       userEmail.value = user.email ?? '';
-      Get.offAll(() => HomeScreen());
+      Get.offAll(() => Homepagecontroller());
     } else {
       Get.offAll(() => LoginScreen());
     }
