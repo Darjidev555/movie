@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:get/get_core/get_core.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:movie/controller/news_controller.dart';
@@ -28,10 +27,10 @@ class _HomeScreenState extends State<HomeScreen> {
     NewsController newsController = Get.put(NewsController());
     return Scaffold(
       appBar: AppBar(
-        iconTheme: IconThemeData(color: Colors.white),
+        iconTheme: const IconThemeData(color: Colors.white),
         centerTitle: true,
         backgroundColor: Colors.black54,
-        title: CommonTextWidget(
+        title: const CommonTextWidget(
           text: "News App",
           color: Colors.white,
           fontSize: 20,
@@ -45,9 +44,9 @@ class _HomeScreenState extends State<HomeScreen> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Row(
+              const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
+                children: [
                   CommonTextWidget(
                     text: "Hottest News",
                     fontSize: 15,
@@ -64,7 +63,7 @@ class _HomeScreenState extends State<HomeScreen> {
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Obx(() => newsController.isTrendingLoading.value
-                    ? CircularProgressIndicator()
+                    ? const CircularProgressIndicator()
                     : Row(
                         children: newsController.trendingNewsList
                             .map((e) => Trandingcard(
@@ -83,9 +82,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       )),
               ),
               const SizedBox(height: 15),
-              Row(
+              const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
+                children: [
                   CommonTextWidget(
                     text: "News For You",
                     fontSize: 15,
@@ -100,7 +99,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               const SizedBox(height: 10),
               Obx(() => newsController.isNewsForYouLoading.value
-                  ? CircularProgressIndicator()
+                  ? const CircularProgressIndicator()
                   : Column(
                       children: newsController.newsForYouList
                           .map((e) => Newstile(

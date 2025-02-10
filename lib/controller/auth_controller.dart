@@ -10,8 +10,8 @@ class AuthController extends GetxController {
   RxBool isLoading = false.obs;
   var errorMessage = ''.obs;
 
-  FirebaseAuth _auth = FirebaseAuth.instance;
-  GoogleSignIn _googleSignIn = GoogleSignIn();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
 
   var userName = ''.obs;
   var userEmail = ''.obs;
@@ -27,9 +27,9 @@ class AuthController extends GetxController {
     if (user != null) {
       userName.value = user.displayName ?? 'User';
       userEmail.value = user.email ?? '';
-      Get.offAll(() => Homepagecontroller());
+      Get.offAll(() => const Homepagecontroller());
     } else {
-      Get.offAll(() => LoginScreen());
+      Get.offAll(() => const LoginScreen());
     }
   }
 
@@ -65,7 +65,7 @@ class AuthController extends GetxController {
       userName.value = userCredential.user?.displayName ?? 'User';
       userEmail.value = email;
 
-      Get.offAll(() => HomeScreen()); // Redirect to Home after login
+      Get.offAll(() => const HomeScreen()); // Redirect to Home after login
       isLoading.value = false;
       return userCredential.user;
     } on FirebaseAuthException catch (e) {
@@ -94,7 +94,8 @@ class AuthController extends GetxController {
       userName.value = userCredential.user?.displayName ?? 'Google User';
       userEmail.value = userCredential.user?.email ?? '';
 
-      Get.offAll(() => HomeScreen()); // Redirect to Home after Google login
+      Get.offAll(
+          () => const HomeScreen()); // Redirect to Home after Google login
       isLoading.value = false;
       return userCredential.user;
     } on FirebaseAuthException catch (e) {
@@ -110,6 +111,6 @@ class AuthController extends GetxController {
   Future<void> logout() async {
     await _auth.signOut();
     await _googleSignIn.signOut();
-    Get.offAll(() => LoginScreen()); // Redirect to Login after logout
+    Get.offAll(() => const LoginScreen()); // Redirect to Login after logout
   }
 }

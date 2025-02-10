@@ -4,14 +4,7 @@ import 'package:movie/controller/auth_controller.dart';
 import 'package:movie/screens/login/login_screen.dart';
 import 'package:movie/widget/commantextwidget.dart';
 
-
 class UserProfileScreen extends StatelessWidget {
-  //TextEditingController dobController = TextEditingController();
-  //TextEditingController phoneController = TextEditingController();
-
-  //final UserProfileController controller = Get.put(UserProfileController());
-
-  //final AuthController authController = Get.find<AuthController>();
   final AuthController authController = Get.put(AuthController());
 
   @override
@@ -20,22 +13,22 @@ class UserProfileScreen extends StatelessWidget {
       backgroundColor: Colors.black54,
       appBar: AppBar(
         backgroundColor: Colors.black54,
-        title: CommonTextWidget(
+        title: const CommonTextWidget(
           text: "Profile",
           color: Colors.white,
         ),
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         child: Center(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              CircleAvatar(
+              const CircleAvatar(
                 radius: 80,
               ),
               // Profile Picture
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               Text(
                 authController.userName.value,
                 style: const TextStyle(
@@ -50,28 +43,29 @@ class UserProfileScreen extends StatelessWidget {
                   fontSize: 18,
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               InkWell(
                 onTap: () {
                   showDialog(
                       context: context,
                       builder: (BuildContext context) {
                         return AlertDialog(
-                          title: Text("Logout"),
-                          content: Text("Are you sure,do you want to Logout?"),
+                          title: const Text("Logout"),
+                          content:
+                              const Text("Are you sure,do you want to Logout?"),
                           actions: [
                             TextButton(
                               onPressed: () {
                                 Get.back();
                               },
-                              child: Text('Cancel'),
+                              child: const Text('Cancel'),
                             ),
                             TextButton(
                               onPressed: () {
                                 authController.logout(); // Log out
-                                Get.offAll(() => LoginScreen());
+                                Get.offAll(() => const LoginScreen());
                               },
-                              child: Text('OK'),
+                              child: const Text('OK'),
                             ),
                           ],
                         );
@@ -82,7 +76,7 @@ class UserProfileScreen extends StatelessWidget {
                   width: 80,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),
-                    color: Color(0xffBB84E8),
+                    color: const Color(0xffBB84E8),
                   ),
                   child: const Center(
                     child: CommonTextWidget(

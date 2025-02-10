@@ -12,7 +12,7 @@ class Homepagecontroller extends StatelessWidget {
     Bottomnavcontroller controller = Get.put(Bottomnavcontroller());
     return Scaffold(
         backgroundColor: Colors.black54,
-        bottomNavigationBar: Navigationbar(),
+        bottomNavigationBar: const Navigationbar(),
         body: Obx(() => controller.pages[controller.index.value]));
   }
 }

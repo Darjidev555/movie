@@ -5,5 +5,5 @@ import 'package:movie/screens/profile/user_profile_screen.dart';
 
 class Bottomnavcontroller extends GetxController {
   RxInt index = 0.obs;
-  var pages = [HomeScreen(), Articalpage(), UserProfileScreen()];
+  var pages = [const HomeScreen(), const Articalpage(), UserProfileScreen()];
 }

@@ -38,7 +38,7 @@ class LoginScreen extends StatelessWidget {
                 )
               ],
             ),
-            CommonTextWidget(
+            const CommonTextWidget(
               text: "Sign in",
               fontSize: 24,
               color: Color(0xff471AA0),
@@ -52,15 +52,15 @@ class LoginScreen extends StatelessWidget {
               customDecoration: InputDecoration(
                 hintText: "Email or Username",
                 //hintStyle: TextStyle(color:Color(0xff000000) ),
-                prefixIcon: Icon(
+                prefixIcon: const Icon(
                   Icons.person,
                   color: Colors.purple,
                 ),
                 border: OutlineInputBorder(
-                  borderSide: BorderSide(color: Color(0xff9747FF), width: 1.0),
+                  borderSide: const BorderSide(color: Color(0xff9747FF), width: 1.0),
                   borderRadius: BorderRadius.circular(8.0),
                 ),
-                focusedBorder: OutlineInputBorder(
+                focusedBorder: const OutlineInputBorder(
                   borderSide: BorderSide(color: Color(0xff9747FF), width: 2.0),
                 ),
               ),
@@ -72,10 +72,10 @@ class LoginScreen extends StatelessWidget {
               () => CommonTextFieldWidget(
                 controller: passwordController,
                 isPassword: controller.obscureText.value,
-                prefixIcon: Icon(Icons.lock, color: Colors.purple),
+                prefixIcon: const Icon(Icons.lock, color: Colors.purple),
                 customDecoration: InputDecoration(
                     hintText: "password",
-                    prefixIcon: Icon(Icons.lock, color: Colors.purple),
+                    prefixIcon: const Icon(Icons.lock, color: Colors.purple),
                     suffixIcon: IconButton(
                       icon: Icon(
                         controller.obscureText.value
@@ -87,7 +87,7 @@ class LoginScreen extends StatelessWidget {
                     ),
                     border: OutlineInputBorder(
                       borderSide:
-                          BorderSide(color: Color(0xff9747FF), width: 1.0),
+                          const BorderSide(color: Color(0xff9747FF), width: 1.0),
                       borderRadius: BorderRadius.circular(8.0),
                     )),
               ),
@@ -95,7 +95,7 @@ class LoginScreen extends StatelessWidget {
             SizedBox(
               height: screenHeight * 0.03,
             ),
-            Row(
+            const Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 CommonTextWidget(
@@ -115,15 +115,15 @@ class LoginScreen extends StatelessWidget {
                   passwordController.text,
                 );
                 if (user != null) {
-                  Get.to(() => HomeScreen());
+                  Get.to(() => const HomeScreen());
                 }
               },
               child: Container(
                 height: screenHeight * 0.07,
                 decoration: BoxDecoration(
-                    color: Color(0xffBB84E8),
+                    color: const Color(0xffBB84E8),
                     borderRadius: BorderRadius.circular(15)),
-                child: Center(
+                child: const Center(
                   child: CommonTextWidget(
                     text: "Sigin in",
                     color: Colors.white,
@@ -135,7 +135,7 @@ class LoginScreen extends StatelessWidget {
             SizedBox(
               height: screenHeight * 0.08,
             ),
-            Row(
+            const Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 CommonTextWidget(
@@ -152,13 +152,13 @@ class LoginScreen extends StatelessWidget {
                   onTap: () async {
                     var user = await authController.googleSignIn();
                     if (user != null) {
-                      Get.to(() => HomeScreen());
+                      Get.to(() => const HomeScreen());
                     }
                   },
                   child: Container(
                     height: screenHeight * 0.1,
                     width: screenWidth * 0.1,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                         image: DecorationImage(
                       image: AssetImage("assets/images/googlelogo.png"),
                     )),
@@ -166,17 +166,17 @@ class LoginScreen extends StatelessWidget {
                 )
               ],
             ),
-            Spacer(),
+            const Spacer(),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                CommonTextWidget(
+                const CommonTextWidget(
                     text: "Don't Have account ?", color: Color(0xff471AA0)),
                 InkWell(
                   onTap: () {
-                    Get.to(SignupScreen());
+                    Get.to(const SignupScreen());
                   },
-                  child: CommonTextWidget(
+                  child: const CommonTextWidget(
                     text: "Sign Up",
                     color: Color(0xff471AA0),
                     fontWeight: FontWeight.bold,

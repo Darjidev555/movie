@@ -9,11 +9,11 @@ class Newstile extends StatelessWidget {
 
   const Newstile(
       {super.key,
-        required this.ontap,
-        required this.title,
-        required this.author,
-        required this.time,
-        required this.imageUrl});
+      required this.ontap,
+      required this.title,
+      required this.author,
+      required this.time,
+      required this.imageUrl});
 
   @override
   Widget build(BuildContext context) {
