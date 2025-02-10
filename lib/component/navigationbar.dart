@@ -24,7 +24,7 @@ class Navigationbar extends StatelessWidget {
                     controller.index.value = 0;
                   },
                   child: Obx(() => AnimatedContainer(
-                      duration: Duration(milliseconds: 300),
+                      duration: const Duration(milliseconds: 300),
                       height: 35,
                       width: 40,
                       decoration: BoxDecoration(
@@ -32,7 +32,7 @@ class Navigationbar extends StatelessWidget {
                               ? Colors.orange
                               : null,
                           borderRadius: BorderRadius.circular(100)),
-                      child: Icon(
+                      child: const Icon(
                         Icons.home,
                         color: Colors.white,
                         size: 25,
@@ -42,7 +42,7 @@ class Navigationbar extends StatelessWidget {
                     controller.index.value = 1;
                   },
                   child: Obx(() => AnimatedContainer(
-                      duration: Duration(milliseconds: 300),
+                      duration: const Duration(milliseconds: 300),
                       height: 40,
                       width: 40,
                       decoration: BoxDecoration(
@@ -50,7 +50,7 @@ class Navigationbar extends StatelessWidget {
                               ? Colors.orange
                               : null,
                           borderRadius: BorderRadius.circular(100)),
-                      child: Icon(
+                      child: const Icon(
                         Icons.book,
                         color: Colors.white,
                         size: 25,
@@ -60,7 +60,7 @@ class Navigationbar extends StatelessWidget {
                     controller.index.value = 2;
                   },
                   child: Obx(() => AnimatedContainer(
-                      duration: Duration(milliseconds: 300),
+                      duration: const Duration(milliseconds: 300),
                       height: 35,
                       width: 40,
                       decoration: BoxDecoration(
@@ -68,7 +68,7 @@ class Navigationbar extends StatelessWidget {
                               ? Colors.orange
                               : null,
                           borderRadius: BorderRadius.circular(100)),
-                      child: Icon(
+                      child: const Icon(
                         Icons.person,
                         color: Colors.white,
                         size: 25,

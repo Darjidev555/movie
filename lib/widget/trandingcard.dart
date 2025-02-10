@@ -22,8 +22,8 @@ class Trandingcard extends StatelessWidget {
     return InkWell(
       onTap: ontap,
       child: Container(
-        margin: EdgeInsets.only(right: 10),
-        padding: EdgeInsets.all(5),
+        margin: const EdgeInsets.only(right: 10),
+        padding: const EdgeInsets.all(5),
         height: 345,
         width: 280,
         decoration: BoxDecoration(
@@ -43,19 +43,19 @@ class Trandingcard extends StatelessWidget {
                     fit: BoxFit.cover,
                   )),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "$tag",
-                  style: TextStyle(color: Colors.white),
+                  tag,
+                  style: const TextStyle(color: Colors.white),
                 ),
                 Text(
-                  "$time",
-                  style: TextStyle(color: Colors.orange),
+                  time,
+                  style: const TextStyle(color: Colors.orange),
                 ),
               ],
             ),
@@ -65,36 +65,36 @@ class Trandingcard extends StatelessWidget {
                 Flexible(
                     child: Text(
                   title,
-                  style: TextStyle(fontSize: 17, color: Colors.white),
+                  style: const TextStyle(fontSize: 17, color: Colors.white),
                   maxLines: 2,
                 ))
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Row(
               children: [
-                SizedBox(
+                const SizedBox(
                   width: 10,
                 ),
-                CircleAvatar(
+                const CircleAvatar(
                   radius: 15,
                   backgroundColor: Colors.orange,
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 5,
                 ),
                 Flexible(
                   child: Text(
                     maxLines: 1,
-                    "$author",
-                    style: TextStyle(color: Colors.white),
+                    author,
+                    style: const TextStyle(color: Colors.white),
                   ),
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 5,
             ),
           ],

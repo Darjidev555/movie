@@ -46,6 +46,8 @@ class AuthController extends GetxController {
       userName.value = name;
       userEmail.value = email;
       isLoading.value = false;
+      Get.offAll(() => Homepagecontroller());
+
       return userCredential.user;
     } on FirebaseAuthException catch (e) {
       isLoading.value = false;

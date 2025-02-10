@@ -49,7 +49,7 @@ class NewsModel {
         "description": description,
         "url": url,
         "urlToImage": urlToImage,
-        "publishedAt": publishedAt!.toIso8601String(),
+        "publishedAt": publishedAt!.toString(),
         "content": content,
       };
 }

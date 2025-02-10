@@ -12,6 +12,7 @@ class UserProfileScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.black54,
       appBar: AppBar(
+        centerTitle: true,
         backgroundColor: Colors.black54,
         title: const CommonTextWidget(
           text: "Profile",
@@ -87,7 +88,6 @@ class UserProfileScreen extends StatelessWidget {
                   ),
                 ),
               ),
-
               // Name
               /* TextField(
                 controller: controller.nameController,

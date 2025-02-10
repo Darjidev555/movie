@@ -10,17 +10,18 @@ class Searchwidget extends StatelessWidget {
     NewsController newsController = Get.put(NewsController());
     TextEditingController searchController = TextEditingController();
     return Container(
-      padding: EdgeInsets.all(10),
+      padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(borderRadius: BorderRadius.circular(30)),
       child: Row(
         children: [
           Expanded(
             child: TextField(
-              style: TextStyle(color: Colors.white),
+              style: const TextStyle(color: Colors.white),
               controller: searchController,
               decoration: InputDecoration(
                   hintText: "Search News",
-                  hintStyle: TextStyle(fontSize: 15.0, color: Colors.white),
+                  hintStyle:
+                      const TextStyle(fontSize: 15.0, color: Colors.white),
                   border: InputBorder.none,
                   filled: true,
                   fillColor: Colors.grey[600]),
@@ -28,11 +29,11 @@ class Searchwidget extends StatelessWidget {
           ),
           Obx(() => newsController.isNewsForYouLoading.value
               ? Container(
-                  padding: EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(10),
                   height: 48,
                   width: 50,
                   color: Colors.orange,
-                  child: CircularProgressIndicator(
+                  child: const CircularProgressIndicator(
                     color: Colors.white,
                   ),
                 )
@@ -44,7 +45,7 @@ class Searchwidget extends StatelessWidget {
                     height: 48,
                     width: 50,
                     color: Colors.orange,
-                    child: Icon(
+                    child: const Icon(
                       Icons.search,
                       color: Colors.white,
                     ),

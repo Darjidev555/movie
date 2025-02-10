@@ -24,7 +24,7 @@ class Newsdeatils extends StatelessWidget {
                         Get.back();
                       },
                       child: Container(
-                          child: Row(
+                          child: const Row(
                         children: [
                           Icon(
                             Icons.arrow_back_ios_new_outlined,
@@ -39,7 +39,7 @@ class Newsdeatils extends StatelessWidget {
                     )
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 30,
                 ),
                 Container(
@@ -51,28 +51,28 @@ class Newsdeatils extends StatelessWidget {
                       newsModel.urlToImage!,
                       fit: BoxFit.cover,
                     )),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Text(
                   newsModel.title!,
-                  style: TextStyle(
+                  style: const TextStyle(
                       color: Colors.white,
                       fontSize: 20,
                       fontWeight: FontWeight.bold),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 5,
                 ),
                 Row(
                   children: [
                     Text(
                       newsModel.publishedAt.toString(),
-                      style: TextStyle(color: Colors.orange),
+                      style: const TextStyle(color: Colors.orange),
                     )
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Row(
@@ -83,23 +83,23 @@ class Newsdeatils extends StatelessWidget {
                       child: Center(
                           child: Text(
                         newsModel.author![0],
-                        style: TextStyle(color: Colors.white),
+                        style: const TextStyle(color: Colors.white),
                       )),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
                     Text(
                       maxLines: 1,
                       newsModel.author!,
-                      style: TextStyle(
+                      style: const TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
                           fontSize: 15),
                     )
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Row(
@@ -107,7 +107,7 @@ class Newsdeatils extends StatelessWidget {
                     Flexible(
                         child: Text(
                       newsModel.description!,
-                      style: TextStyle(color: Colors.white),
+                      style: const TextStyle(color: Colors.white),
                     )),
                   ],
                 )
