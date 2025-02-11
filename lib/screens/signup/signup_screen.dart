@@ -191,7 +191,7 @@ class SignupScreen extends StatelessWidget {
                           nameController.text)
                       .then((user) {
                     if (user != null) {
-                      Get.to(const HomeScreen());
+                      Get.to(HomeScreen());
                     }
                   });
                 } else {

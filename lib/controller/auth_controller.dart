@@ -67,7 +67,7 @@ class AuthController extends GetxController {
       userName.value = userCredential.user?.displayName ?? 'User';
       userEmail.value = email;
 
-      Get.offAll(() => const HomeScreen()); // Redirect to Home after login
+      Get.offAll(() => HomeScreen()); // Redirect to Home after login
       isLoading.value = false;
       return userCredential.user;
     } on FirebaseAuthException catch (e) {
@@ -96,8 +96,7 @@ class AuthController extends GetxController {
       userName.value = userCredential.user?.displayName ?? 'Google User';
       userEmail.value = userCredential.user?.email ?? '';
 
-      Get.offAll(
-          () => const HomeScreen()); // Redirect to Home after Google login
+      Get.offAll(() => HomeScreen()); // Redirect to Home after Google login
       isLoading.value = false;
       return userCredential.user;
     } on FirebaseAuthException catch (e) {

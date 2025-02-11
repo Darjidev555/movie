@@ -143,7 +143,7 @@ class LoginScreen extends StatelessWidget {
                   onTap: () async {
                     var user = await authController.googleSignIn();
                     if (user != null) {
-                      Get.to(() => const HomeScreen());
+                      Get.to(() => HomeScreen());
                     }
                   },
                   child: Container(

@@ -8,6 +8,10 @@ class NewsController extends GetxController {
   RxBool isTrendingLoading = false.obs;
   RxBool isNewsForYouLoading = false.obs;
 
+  // Add toggle state variables
+  var showAllTrending = false.obs;
+  var showAllNewsForYou = false.obs;
+
   final NetworkAPICall _networkAPICall = NetworkAPICall();
 
   @override
@@ -68,5 +72,14 @@ class NewsController extends GetxController {
     } finally {
       isNewsForYouLoading.value = false;
     }
+  }
+
+  // Toggle functions for "See All"
+  void toggleShowAllTrending() {
+    showAllTrending.value = !showAllTrending.value;
+  }
+
+  void toggleShowAllNewsForYou() {
+    showAllNewsForYou.value = !showAllNewsForYou.value;
   }
 }
