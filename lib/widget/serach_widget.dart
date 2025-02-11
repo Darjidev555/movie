@@ -9,23 +9,39 @@ class Searchwidget extends StatelessWidget {
   Widget build(BuildContext context) {
     NewsController newsController = Get.put(NewsController());
     TextEditingController searchController = TextEditingController();
+    RxBool isTextEntered = false.obs;
+
     return Container(
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(borderRadius: BorderRadius.circular(30)),
       child: Row(
         children: [
           Expanded(
-            child: TextField(
-              style: const TextStyle(color: Colors.white),
-              controller: searchController,
-              decoration: InputDecoration(
-                  hintText: "Search News",
-                  hintStyle:
-                      const TextStyle(fontSize: 15.0, color: Colors.white),
-                  border: InputBorder.none,
-                  filled: true,
-                  fillColor: Colors.grey[600]),
-            ),
+            child: Obx(() => TextField(
+                  style: const TextStyle(color: Colors.white),
+                  controller: searchController,
+                  onChanged: (value) {
+                    isTextEntered.value = value.isNotEmpty;
+                  },
+                  decoration: InputDecoration(
+                    hintText: "Search News",
+                    hintStyle:
+                        const TextStyle(fontSize: 15.0, color: Colors.white),
+                    border: InputBorder.none,
+                    filled: true,
+                    fillColor: Colors.grey[600],
+                    suffixIcon: isTextEntered.value
+                        ? IconButton(
+                            icon: const Icon(Icons.clear, color: Colors.white),
+                            onPressed: () {
+                              searchController.clear();
+                              isTextEntered.value = false;
+                              newsController.getNewsForYou();
+                            },
+                          )
+                        : null,
+                  ),
+                )),
           ),
           Obx(() => newsController.isNewsForYouLoading.value
               ? Container(
