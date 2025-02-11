@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:movie/model/news_model.dart';
 
 class Newsdeatils extends StatelessWidget {
@@ -67,7 +68,7 @@ class Newsdeatils extends StatelessWidget {
                 Row(
                   children: [
                     Text(
-                      newsModel.publishedAt.toString(),
+                      DateFormat('dd-MM-yyyy').format(newsModel.publishedAt!),
                       style: const TextStyle(color: Colors.orange),
                     )
                   ],
