@@ -1,6 +1,6 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:flutter/material.dart';
 import 'package:movie/controller/news_controller.dart';
 import 'package:movie/widget/commantextwidget.dart';
 import 'package:movie/widget/newsdetails.dart';
@@ -19,12 +19,24 @@ class HomeScreen extends StatelessWidget {
     return DateFormat('yyyy-MM-dd').format(date);
   }
 
+  void _onScroll() {
+    if (newsController.scrollController.position.pixels >=
+        newsController.scrollController.position.maxScrollExtent - 20) {
+      // Load more news when the user scrolls near the bottom
+      if (!newsController.isNewsForYouMoreLoading.value) {
+        newsController.getNewsForYou(loadMore: true);
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    newsController.scrollController.addListener(_onScroll);
+
     return RefreshIndicator(
       onRefresh: () async {
-        newsController.getNewsForYou();
         newsController.getTrendingNews();
+        newsController.getNewsForYou();
       },
       child: Scaffold(
         appBar: AppBar(
@@ -39,104 +51,102 @@ class HomeScreen extends StatelessWidget {
           ),
         ),
         backgroundColor: Colors.black54,
-        body: Padding(
+        body: ListView(
+          controller: newsController.scrollController,
           padding: const EdgeInsets.all(10.0),
-          child: SingleChildScrollView(
-            child: Column(
+          children: [
+            // Trending News
+            const Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const CommonTextWidget(
-                      text: "Hottest News",
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
-                    Obx(() => GestureDetector(
-                          onTap: () {
-                            newsController.toggleShowAllTrending();
-                          },
-                          child: CommonTextWidget(
-                            text: newsController.showAllTrending.value
-                                ? "Show Less"
-                                : "See All",
-                            color: Colors.blue,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        )),
-                  ],
+                const CommonTextWidget(
+                  text: "Hottest News",
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
                 ),
-                const SizedBox(height: 20),
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Obx(() => newsController.isTrendingLoading.value
-                      ? const CircularProgressIndicator()
-                      : Row(
-                          children: newsController.trendingNewsList
-                              .take(newsController.showAllTrending.value
-                                  ? newsController.trendingNewsList.length
-                                  : 4)
-                              .map((e) => Trandingcard(
-                                    ontap: () {
-                                      Get.to(Newsdeatils(newsModel: e));
-                                    },
-                                    imageUrl: e.urlToImage!,
-                                    tag: "Trending No 1",
-                                    title: e.title!,
-                                    author: e.author!,
-                                    time: formatDate(e.publishedAt),
-                                  ))
-                              .toList(),
-                        )),
-                ),
-                const SizedBox(height: 15),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const CommonTextWidget(
-                      text: "News For You",
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
-                    Obx(() => GestureDetector(
-                          onTap: () {
-                            newsController.toggleShowAllNewsForYou();
-                          },
-                          child: CommonTextWidget(
-                            text: newsController.showAllNewsForYou.value
-                                ? "Show Less"
-                                : "See All",
-                            color: Colors.blue,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        )),
-                  ],
-                ),
-                const SizedBox(height: 10),
-                Obx(() => newsController.isNewsForYouLoading.value
-                    ? const CircularProgressIndicator()
-                    : Column(
-                        children: newsController.newsForYouList
-                            .take(newsController.showAllNewsForYou.value
-                                ? newsController.newsForYouList.length
-                                : 4)
-                            .map((e) => Newstile(
-                                  ontap: () {
-                                    Get.to(Newsdeatils(newsModel: e));
-                                  },
-                                  title: e.title!,
-                                  author: e.author ?? "Unknown",
-                                  time: formatDate(e.publishedAt),
-                                  imageUrl: e.urlToImage ??
-                                      "https://www.hindustantimes.com/ht-img/img/2024/10/07/550x309/Prime-Minister-Narendra-Modi-and-Maldives-Presiden_1728317636195_1728317752751.jpg",
-                                ))
-                            .toList(),
-                      )),
               ],
             ),
-          ),
+            const SizedBox(height: 20),
+            SizedBox(
+              height: 350,
+              child: Obx(() => newsController.isTrendingLoading.value
+                  ? const Center(child: CircularProgressIndicator())
+                  : ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: newsController.trendingNewsList.length + 1,
+                      itemBuilder: (context, index) {
+                        if (index < newsController.trendingNewsList.length) {
+                          var e = newsController.trendingNewsList[index];
+                          return Trandingcard(
+                            ontap: () {
+                              Get.to(Newsdeatils(newsModel: e));
+                            },
+                            imageUrl: e.urlToImage!,
+                            tag: "Trending No ${index + 1}",
+                            title: e.title!,
+                            author: e.author!,
+                            time: formatDate(e.publishedAt),
+                          );
+                        } else {
+                          return newsController.isTrendingMoreLoading.value
+                              ? const CircularProgressIndicator()
+                              : const SizedBox();
+                        }
+                      },
+                    )),
+            ),
+            const SizedBox(height: 15),
+
+            // News For You
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const CommonTextWidget(
+                  text: "News For You",
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ],
+            ),
+            const SizedBox(height: 10),
+            Obx(() {
+              if (newsController.isNewsForYouLoading.value &&
+                  newsController.newsForYouList.isEmpty) {
+                // Show full-page loader only for the first load
+                return const Center(child: CircularProgressIndicator());
+              }
+
+              return ListView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: newsController.newsForYouList.length + 1,
+                itemBuilder: (context, index) {
+                  if (index < newsController.newsForYouList.length) {
+                    var e = newsController.newsForYouList[index];
+                    return Newstile(
+                      ontap: () {
+                        Get.to(Newsdeatils(newsModel: e));
+                      },
+                      title: e.title!,
+                      author: e.author ?? "Unknown",
+                      time: formatDate(e.publishedAt),
+                      imageUrl: e.urlToImage ??
+                          "https://www.hindustantimes.com/ht-img/img/2024/10/07/550x309/Prime-Minister-Narendra-Modi-and-Maldives-Presiden_1728317636195_1728317752751.jpg",
+                    );
+                  } else {
+                    // Show small loading indicator at the bottom when fetching more news
+                    return const Center(
+                        child: Padding(
+                      padding: EdgeInsets.all(10),
+                      child: CircularProgressIndicator(),
+                    ));
+                  }
+                },
+              );
+            })
+          ],
         ),
       ),
     );

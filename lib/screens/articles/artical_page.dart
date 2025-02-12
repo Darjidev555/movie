@@ -13,7 +13,7 @@ class Articalpage extends StatelessWidget {
     NewsController newsController = Get.put(NewsController());
     return RefreshIndicator(
       onRefresh: () async {
-        newsController.newsForYouList;
+        newsController.getNewsForYou();
       },
       child: Scaffold(
           backgroundColor: Colors.black54,

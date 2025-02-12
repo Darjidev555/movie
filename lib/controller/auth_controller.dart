@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:movie/controller/homepage_controller.dart';
@@ -6,6 +7,8 @@ import 'package:movie/screens/home/home_screen.dart';
 import 'package:movie/screens/login/login_screen.dart';
 
 class AuthController extends GetxController {
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
   static AuthController instance = Get.find();
   RxBool isLoading = false.obs;
   var errorMessage = ''.obs;
@@ -67,7 +70,7 @@ class AuthController extends GetxController {
       userName.value = userCredential.user?.displayName ?? 'User';
       userEmail.value = email;
 
-      Get.offAll(() => HomeScreen()); // Redirect to Home after login
+      Get.offAll(() => Homepagecontroller()); // Redirect to Home after login
       isLoading.value = false;
       return userCredential.user;
     } on FirebaseAuthException catch (e) {
@@ -96,7 +99,7 @@ class AuthController extends GetxController {
       userName.value = userCredential.user?.displayName ?? 'Google User';
       userEmail.value = userCredential.user?.email ?? '';
 
-      Get.offAll(() => HomeScreen()); // Redirect to Home after Google login
+      Get.offAll(() => Homepagecontroller());
       isLoading.value = false;
       return userCredential.user;
     } on FirebaseAuthException catch (e) {

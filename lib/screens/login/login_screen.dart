@@ -14,31 +14,30 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final AuthController authController = Get.put(AuthController());
-    final TextEditingController emailController = TextEditingController();
-    final TextEditingController passwordController = TextEditingController();
     final PasswordController controller = Get.put(PasswordController());
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
 
     void validateAndLogin() async {
-      if (emailController.text.isEmpty || passwordController.text.isEmpty) {
+      if (authController.emailController.text.isEmpty ||
+          authController.passwordController.text.isEmpty) {
         Get.snackbar("Error", "All fields are required",
             snackPosition: SnackPosition.TOP);
         return;
       }
-      if (!GetUtils.isEmail(emailController.text)) {
+      if (!GetUtils.isEmail(authController.emailController.text)) {
         Get.snackbar("Error", "Enter a valid email",
             snackPosition: SnackPosition.TOP, colorText: Colors.red);
         return;
       }
-      if (passwordController.text.length < 6) {
+      if (authController.passwordController.text.length < 6) {
         Get.snackbar("Error", "Password must be at least 6 characters",
             snackPosition: SnackPosition.TOP);
         return;
       }
 
-      var user = await authController.login(
-          emailController.text, passwordController.text);
+      var user = await authController.login(authController.emailController.text,
+          authController.passwordController.text);
       if (user != null) {
         Get.offAll(() => Homepagecontroller());
       }
@@ -70,7 +69,7 @@ class LoginScreen extends StatelessWidget {
             ),
             SizedBox(height: screenHeight * 0.03),
             CommonTextFieldWidget(
-              controller: emailController,
+              controller: authController.emailController,
               customDecoration: InputDecoration(
                 hintText: "Email or Username",
                 prefixIcon: const Icon(Icons.person, color: Colors.purple),
@@ -81,7 +80,7 @@ class LoginScreen extends StatelessWidget {
             SizedBox(height: screenHeight * 0.04),
             Obx(
               () => CommonTextFieldWidget(
-                controller: passwordController,
+                controller: authController.passwordController,
                 isPassword: controller.obscureText.value,
                 prefixIcon: const Icon(Icons.lock, color: Colors.purple),
                 customDecoration: InputDecoration(

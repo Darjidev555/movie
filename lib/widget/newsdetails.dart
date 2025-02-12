@@ -49,14 +49,16 @@ class Newsdeatils extends StatelessWidget {
                         color: Colors.red,
                         borderRadius: BorderRadius.circular(20)),
                     child: Image.network(
-                      newsModel.urlToImage!,
+                      newsModel.urlToImage?.isNotEmpty == true
+                          ? newsModel.urlToImage!
+                          : "https://www.hindustantimes.com/ht-img/img/2024/10/07/550x309/Prime-Minister-Narendra-Modi-and-Maldives-Presiden_1728317636195_1728317752751.jpg",
                       fit: BoxFit.cover,
                     )),
                 const SizedBox(
                   height: 20,
                 ),
                 Text(
-                  newsModel.title!,
+                  newsModel.title ?? "No Title Available",
                   style: const TextStyle(
                       color: Colors.white,
                       fontSize: 20,
@@ -68,7 +70,10 @@ class Newsdeatils extends StatelessWidget {
                 Row(
                   children: [
                     Text(
-                      DateFormat('dd-MM-yyyy').format(newsModel.publishedAt!),
+                      newsModel.publishedAt != null
+                          ? DateFormat('dd-MM-yyyy')
+                              .format(newsModel.publishedAt!)
+                          : "Unknown Date",
                       style: const TextStyle(color: Colors.orange),
                     )
                   ],
@@ -83,7 +88,9 @@ class Newsdeatils extends StatelessWidget {
                       backgroundColor: Colors.red,
                       child: Center(
                           child: Text(
-                        newsModel.author![0],
+                        newsModel.author?.isNotEmpty == true
+                            ? newsModel.author![0]
+                            : "?",
                         style: const TextStyle(color: Colors.white),
                       )),
                     ),
@@ -92,7 +99,9 @@ class Newsdeatils extends StatelessWidget {
                     ),
                     Text(
                       maxLines: 1,
-                      newsModel.author!,
+                      newsModel.author?.isNotEmpty == true
+                          ? newsModel.author!
+                          : "Unknown Author",
                       style: const TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
@@ -107,7 +116,7 @@ class Newsdeatils extends StatelessWidget {
                   children: [
                     Flexible(
                         child: Text(
-                      newsModel.description!,
+                      newsModel.description ?? "No description available.",
                       style: const TextStyle(color: Colors.white),
                     )),
                   ],
